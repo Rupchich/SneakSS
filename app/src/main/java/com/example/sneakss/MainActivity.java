@@ -1,13 +1,18 @@
 package com.example.sneakss;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +24,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PICK_IMAGE_REQUEST = 1;
     private RecyclerView recyclerViewSneakers;
     private SneakerAdapter sneakerAdapter;
     private List<Sneaker> sneakerList;
     private FloatingActionButton fabAddSneaker;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,21 +65,22 @@ public class MainActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_add_sneaker, null);
         builder.setView(dialogView);
 
-        final EditText editTextImageUrl = dialogView.findViewById(R.id.editTextImageUrl);
         final EditText editTextSize = dialogView.findViewById(R.id.editTextSize);
         final EditText editTextCompany = dialogView.findViewById(R.id.editTextCompany);
         final EditText editTextModel = dialogView.findViewById(R.id.editTextModel);
         final EditText editTextPrice = dialogView.findViewById(R.id.editTextPrice);
+        Button buttonSelectImage = dialogView.findViewById(R.id.buttonSelectImage);
+
+        buttonSelectImage.setOnClickListener(v -> openImageChooser());
 
         builder.setTitle("Dodaj novu tenisicu");
         builder.setPositiveButton("Dodaj", (dialog, which) -> {
-            String imageUrl = editTextImageUrl.getText().toString();
             String sizeStr = editTextSize.getText().toString();
             String company = editTextCompany.getText().toString();
             String model = editTextModel.getText().toString();
             String priceStr = editTextPrice.getText().toString();
 
-            if (TextUtils.isEmpty(imageUrl) || TextUtils.isEmpty(sizeStr) ||
+            if (imageUri == null || TextUtils.isEmpty(sizeStr) ||
                     TextUtils.isEmpty(company) || TextUtils.isEmpty(model) || TextUtils.isEmpty(priceStr)) {
                 Toast.makeText(MainActivity.this, "Sva polja su obavezna", Toast.LENGTH_SHORT).show();
                 return;
@@ -81,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             double size = Double.parseDouble(sizeStr);
             double price = Double.parseDouble(priceStr);
 
-            Sneaker newSneaker = new Sneaker(imageUrl, size, company, model, price);
+            Sneaker newSneaker = new Sneaker(imageUri.toString(), size, company, model, price);
             sneakerList.add(newSneaker);
             sneakerAdapter.notifyItemInserted(sneakerList.size() - 1);
             recyclerViewSneakers.scrollToPosition(sneakerList.size() - 1);
@@ -91,5 +99,20 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void openImageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Odaberite sliku"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+        }
     }
 }

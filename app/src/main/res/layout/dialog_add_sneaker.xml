@@ -5,12 +5,11 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/editTextImageUrl"
+    <Button
+        android:id="@+id/buttonSelectImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="URL slike"
-        android:inputType="textUri" />
+        android:text="Odaberi sliku iz galerije" />
 
     <EditText
         android:id="@+id/editTextSize"
