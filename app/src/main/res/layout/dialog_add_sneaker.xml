@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextImageUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="URL slike"
+        android:inputType="textUri" />
+
+    <EditText
+        android:id="@+id/editTextSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Veličina"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/editTextCompany"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tvrtka"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editTextModel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Model"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editTextPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cijena"
+        android:inputType="numberDecimal" />
+</LinearLayout>
