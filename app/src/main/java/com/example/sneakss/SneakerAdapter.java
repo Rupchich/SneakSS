@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SneakerAdapter extends RecyclerView.Adapter<SneakerAdapter.SneakerViewHolder> {
@@ -22,7 +23,27 @@ public class SneakerAdapter extends RecyclerView.Adapter<SneakerAdapter.SneakerV
 
     public SneakerAdapter(Context context, List<Sneaker> sneakerList) {
         this.context = context;
-        this.sneakerList = sneakerList;
+        this.sneakerList = sneakerList != null ? sneakerList : new ArrayList<>();
+    }
+
+    public void addSneaker(Sneaker sneaker){
+        sneakerList.add(sneaker);
+        notifyItemInserted(sneakerList.size() - 1);
+    }
+    public List<Sneaker> getSneakers() {
+        return sneakerList;
+    }
+
+    public Sneaker getSneaker(int index){
+        return sneakerList.get(index);
+    }
+
+    public void removeSneaker(Sneaker sneaker) {
+        int position = sneakerList.indexOf(sneaker);
+        if (position >= 0) {
+            sneakerList.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     @NonNull

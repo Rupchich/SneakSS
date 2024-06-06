@@ -115,4 +115,24 @@ public class MainActivity extends AppCompatActivity {
             imageUri = data.getData();
         }
     }
+    public void setSneakerAdapter(SneakerAdapter adapter) {
+        this.sneakerAdapter = adapter;
+        recyclerViewSneakers.setAdapter(adapter);
+    }
+    public void addSneaker(Sneaker sneaker) {
+        if (sneakerAdapter != null) {
+            sneakerAdapter.addSneaker(sneaker);
+        }
+    }
+    public void removeSneaker(Sneaker sneaker) {
+        if (sneakerAdapter != null) {
+            sneakerAdapter.removeSneaker(sneaker);
+        }
+    }
+    public List<Sneaker> getSneakers() {
+        if (sneakerAdapter != null) {
+            return sneakerAdapter.getSneakers();
+        }
+        return null;
+    }
 }
