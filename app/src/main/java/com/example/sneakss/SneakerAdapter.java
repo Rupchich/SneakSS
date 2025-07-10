@@ -3,8 +3,8 @@ package com.example.sneakss;
 import android.content.SharedPreferences;
 import android.content.Context;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,13 +44,27 @@ public class SneakerAdapter extends RecyclerView.Adapter<SneakerAdapter.SneakerV
         SharedPreferences prefs = holder.itemView.getContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
         String color = prefs.getString("item_color", "white");
 
-        int bgColor = android.graphics.Color.WHITE;
-        if (color.equals("gray")) bgColor = android.graphics.Color.LTGRAY;
-        else if (color.equals("blue")) bgColor = android.graphics.Color.parseColor("#BBDEFB");
+        int bgColor = Color.WHITE;
+        if (color.equals("gray")) bgColor = Color.LTGRAY;
+        else if (color.equals("blue")) bgColor = Color.parseColor("#BBDEFB");
 
         holder.itemView.setBackgroundColor(bgColor);
 
         holder.options.setOnClickListener(v -> showPopupMenu(v, holder.getAdapterPosition(), sneaker, holder.itemView.getContext()));
+
+        holder.itemView.setOnClickListener(v -> {
+            Context context = holder.itemView.getContext();
+            Intent intent = new Intent(context, SneakerDetailsActivity.class);
+            intent.putExtra("id", sneaker.id);
+            intent.putExtra("name", sneaker.name);
+            intent.putExtra("brand", sneaker.brand);
+            intent.putExtra("color", sneaker.color);
+            intent.putExtra("size", sneaker.size);
+            intent.putExtra("purpose", sneaker.purpose);
+            intent.putExtra("price", sneaker.price);
+            intent.putExtra("note", sneaker.note);
+            context.startActivity(intent);
+        });
     }
 
     @Override

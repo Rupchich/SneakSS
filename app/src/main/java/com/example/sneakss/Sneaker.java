@@ -30,4 +30,7 @@ public class Sneaker {
 
     @ColumnInfo(name = "price")
     public double price;
+
+    @ColumnInfo(name = "note")
+    public String note;
 }
