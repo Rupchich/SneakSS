@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Boja pozadine STAVKI:"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <RadioGroup android:id="@+id/itemColorOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton android:id="@+id/radioItemWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bijela" />
+
+            <RadioButton android:id="@+id/radioItemGray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Siva" />
+
+            <RadioButton android:id="@+id/radioItemBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Plava" />
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Boja pozadine EKRANA:"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <RadioGroup android:id="@+id/screenColorOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton android:id="@+id/radioScreenWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bijela" />
+
+            <RadioButton android:id="@+id/radioScreenGray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Siva" />
+
+            <RadioButton android:id="@+id/radioScreenBeige"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bež" />
+        </RadioGroup>
+    </LinearLayout>
+</ScrollView>

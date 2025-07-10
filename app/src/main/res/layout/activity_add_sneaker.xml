@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Naziv tenisice"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/brandInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Brend"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/colorInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Boja"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/sizeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Veličina"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/purposeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Namjena"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/priceInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cijena (€)"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spremi" />
+    </LinearLayout>
+</ScrollView>
