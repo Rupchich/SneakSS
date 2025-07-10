@@ -1,0 +1,53 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/filterName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Naziv tenisice" />
+
+        <EditText
+            android:id="@+id/filterBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Brend" />
+
+        <EditText
+            android:id="@+id/filterColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Boja" />
+
+        <EditText
+            android:id="@+id/filterSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Veličina" />
+
+        <EditText
+            android:id="@+id/filterPurpose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Namjena" />
+
+        <EditText
+            android:id="@+id/filterPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cijena (€)" />
+
+        <Button
+            android:id="@+id/btnFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FILTRIRAJ" />
+    </LinearLayout>
+</ScrollView>

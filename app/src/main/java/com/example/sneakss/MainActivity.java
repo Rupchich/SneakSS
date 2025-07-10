@@ -3,6 +3,7 @@ package com.example.sneakss;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
@@ -19,9 +20,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int ADD_SNEAKER_REQUEST = 1;
     private static final int EDIT_SNEAKER_REQUEST = 2;
+    private static final int FILTER_REQUEST = 3;
 
     private RecyclerView recyclerView;
     private SearchView searchView;
+    private ImageButton filterButton;
     private SneakerAdapter adapter;
     private SneakerRepository repository;
     private List<Sneaker> sneakerList = new ArrayList<>();
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         searchView = findViewById(R.id.searchView);
+        filterButton = findViewById(R.id.filterButton);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         repository = new SneakerRepository(this);
@@ -60,9 +64,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                filterSneakers(newText);
+                filterSneakersByQuery(newText);
                 return true;
             }
+        });
+
+        filterButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FilterActivity.class);
+            startActivityForResult(intent, FILTER_REQUEST);
         });
 
         loadSneakers();
@@ -96,13 +105,40 @@ public class MainActivity extends AppCompatActivity {
         }));
     }
 
-    private void filterSneakers(String query) {
+    private void filterSneakersByQuery(String query) {
         sneakerList.clear();
         for (Sneaker s : fullList) {
             if (s.name.toLowerCase().contains(query.toLowerCase()) || s.brand.toLowerCase().contains(query.toLowerCase())) {
                 sneakerList.add(s);
             }
         }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void filterSneakersByAttributes(String name, String brand, String color, String size, String purpose, String price) {
+        List<Sneaker> filtered = new ArrayList<>();
+        for (Sneaker s : fullList) {
+            boolean match = true;
+
+            if (!name.isEmpty() && !s.name.equalsIgnoreCase(name)) match = false;
+            if (!brand.isEmpty() && !s.brand.equalsIgnoreCase(brand)) match = false;
+            if (!color.isEmpty() && !s.color.equalsIgnoreCase(color)) match = false;
+            if (!size.isEmpty() && !s.size.equals(size)) match = false;
+            if (!purpose.isEmpty() && !s.purpose.equalsIgnoreCase(purpose)) match = false;
+            if (!price.isEmpty()) {
+                try {
+                    double p = Double.parseDouble(price);
+                    if (s.price != p) match = false;
+                } catch (NumberFormatException e) {
+                    match = false;
+                }
+            }
+
+            if (match) filtered.add(s);
+        }
+
+        sneakerList.clear();
+        sneakerList.addAll(filtered);
         adapter.notifyDataSetChanged();
     }
 
@@ -134,6 +170,22 @@ public class MainActivity extends AppCompatActivity {
                 repository.update(updated);
                 loadSneakers();
             }
+        } else if (requestCode == FILTER_REQUEST && resultCode == RESULT_OK && data != null) {
+            String name = data.getStringExtra("name");
+            String brand = data.getStringExtra("brand");
+            String color = data.getStringExtra("color");
+            String size = data.getStringExtra("size");
+            String purpose = data.getStringExtra("purpose");
+            String price = data.getStringExtra("price");
+
+            filterSneakersByAttributes(
+                    name != null ? name : "",
+                    brand != null ? brand : "",
+                    color != null ? color : "",
+                    size != null ? size : "",
+                    purpose != null ? purpose : "",
+                    price != null ? price : ""
+            );
         }
     }
 }

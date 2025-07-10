@@ -43,6 +43,11 @@
             android:label="Postavke"
             android:theme="@style/Theme.SneakSS" />
 
+        <activity android:name=".FilterActivity"
+            android:exported="false"
+            android:label="Filter"
+            android:theme="@style/Theme.SneakSS" />
+
     </application>
 
 </manifest>
