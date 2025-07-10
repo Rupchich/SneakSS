@@ -3,15 +3,17 @@ package com.example.sneakss;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private SearchView searchView;
-    private ImageButton filterButton;
+    private ImageButton filterButton, menuButton;
     private SneakerAdapter adapter;
     private SneakerRepository repository;
     private List<Sneaker> sneakerList = new ArrayList<>();
@@ -38,23 +40,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         searchView = findViewById(R.id.searchView);
         filterButton = findViewById(R.id.filterButton);
+        menuButton = findViewById(R.id.menuButton);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         repository = new SneakerRepository(this);
         adapter = new SneakerAdapter(sneakerList);
         recyclerView.setAdapter(adapter);
-
-        FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
-        fabAdd.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, AddSneakerActivity.class);
-            startActivityForResult(intent, ADD_SNEAKER_REQUEST);
-        });
-
-        FloatingActionButton fabSettings = findViewById(R.id.fabSettings);
-        fabSettings.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(intent);
-        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -74,7 +65,36 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, FILTER_REQUEST);
         });
 
+        menuButton.setOnClickListener(this::showMenu);
+
         loadSneakers();
+    }
+
+    private void showMenu(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.main_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.menu_add) {
+                startActivityForResult(new Intent(this, AddSneakerActivity.class), ADD_SNEAKER_REQUEST);
+                return true;
+            } else if (id == R.id.menu_filter) {
+                startActivityForResult(new Intent(this, FilterActivity.class), FILTER_REQUEST);
+                return true;
+            } else if (id == R.id.menu_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            } else if (id == R.id.menu_logout) {
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+                return true;
+            }
+            return false;
+        });
+
+        popup.show();
     }
 
     @Override
