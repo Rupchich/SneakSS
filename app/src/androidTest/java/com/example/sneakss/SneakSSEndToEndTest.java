@@ -74,7 +74,7 @@ public class SneakSSEndToEndTest {
         onView(withId(R.id.btnFilter)).perform(click());
 
         onView(withId(R.id.menuButton)).perform(click());
-        onView(withText("Postavke")).perform(click());
+        onView(withId(R.id.navSettings)).perform(click());
         pressBack();
 
         onView(withId(R.id.menuButton)).perform(click());
