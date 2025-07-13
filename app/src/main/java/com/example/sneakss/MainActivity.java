@@ -71,31 +71,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showMenu(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.main_menu, popup.getMenu());
+        View sheetView = getLayoutInflater().inflate(R.layout.bottom_nav_menu, null);
+        com.google.android.material.bottomsheet.BottomSheetDialog bottomSheetDialog = new com.google.android.material.bottomsheet.BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(sheetView);
 
-        popup.setOnMenuItemClickListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.menu_add) {
-                startActivityForResult(new Intent(this, AddSneakerActivity.class), ADD_SNEAKER_REQUEST);
-                return true;
-            } else if (id == R.id.menu_filter) {
-                startActivityForResult(new Intent(this, FilterActivity.class), FILTER_REQUEST);
-                return true;
-            } else if (id == R.id.menu_settings) {
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            } else if (id == R.id.menu_logout) {
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
-                return true;
-            }
-            return false;
+        sheetView.findViewById(R.id.navAdd).setOnClickListener(view -> {
+            startActivityForResult(new Intent(this, AddSneakerActivity.class), ADD_SNEAKER_REQUEST);
+            bottomSheetDialog.dismiss();
         });
 
-        popup.show();
+        sheetView.findViewById(R.id.navFilter).setOnClickListener(view -> {
+            startActivityForResult(new Intent(this, FilterActivity.class), FILTER_REQUEST);
+            bottomSheetDialog.dismiss();
+        });
+
+        sheetView.findViewById(R.id.navSettings).setOnClickListener(view -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+            bottomSheetDialog.dismiss();
+        });
+
+        sheetView.findViewById(R.id.navLogout).setOnClickListener(view -> {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            bottomSheetDialog.dismiss();
+        });
+
+        bottomSheetDialog.show();
     }
+
 
     @Override
     protected void onResume() {
