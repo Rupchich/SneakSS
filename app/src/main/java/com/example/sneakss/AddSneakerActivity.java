@@ -6,6 +6,9 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class AddSneakerActivity extends AppCompatActivity {
 
     private EditText nameInput, brandInput, colorInput, sizeInput, purposeInput, priceInput;
@@ -36,7 +39,9 @@ public class AddSneakerActivity extends AppCompatActivity {
             String priceStr = priceInput.getText().toString().trim();
 
             if (!name.isEmpty() && !brand.isEmpty() && !color.isEmpty() && !size.isEmpty() && !purpose.isEmpty() && !priceStr.isEmpty()) {
-                double price = Double.parseDouble(priceStr);
+                BigDecimal priceDecimal = new BigDecimal(priceStr).setScale(2, RoundingMode.HALF_UP);
+                double price = priceDecimal.doubleValue();
+
                 Sneaker sneaker = new Sneaker();
                 sneaker.imageResId = R.drawable.ic_launcher_foreground;
                 sneaker.name = name;

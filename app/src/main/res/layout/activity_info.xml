@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/infoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pozdrav!\n\nSneakSS je aplikacija koja služi za upravljanje kolekcijom tenisica. U ovoj aplikaciji možete:\n\n• unositi tenisice\n• pretraživati prema nazivu, boji, brendu...\n• uređivati i brisati postojeće stavke\n• spremati sve podatke lokalno\n\nHvala što koristite SneakSS!"
+            android:textSize="16sp" />
+    </LinearLayout>
+</ScrollView>

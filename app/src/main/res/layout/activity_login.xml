@@ -7,6 +7,22 @@
     android:layout_height="match_parent"
     android:background="#FAFAFA">
 
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SneakSS"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
     <EditText
         android:id="@+id/usernameInput"
         android:layout_width="match_parent"
@@ -27,5 +43,14 @@
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prijavi se" />
+        android:text="Prijavi se"
+        android:layout_marginBottom="16dp" />
+
+    <ImageButton
+        android:id="@+id/infoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_info_details"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Informacije o aplikaciji" />
 </LinearLayout>

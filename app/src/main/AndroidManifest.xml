@@ -53,6 +53,12 @@
             android:label="Detalji tenisice"
             android:theme="@style/Theme.SneakSS" />
 
+        <activity android:name=".InfoActivity"
+            android:exported="false"
+            android:label="Info aplikacije"
+            android:theme="@style/Theme.SneakSS" />
+
+
     </application>
 
 </manifest>
