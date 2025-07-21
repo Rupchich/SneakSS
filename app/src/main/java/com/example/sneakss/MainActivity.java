@@ -31,11 +31,16 @@ public class MainActivity extends AppCompatActivity {
     private List<Sneaker> sneakerList = new ArrayList<>();
     private List<Sneaker> fullList = new ArrayList<>();
     private boolean showingFavorites = false;
+    private String nickname = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+        nickname = prefs.getString("nickname", "");
+        setTitle(nickname.isEmpty() ? "SneakSS" : "SneakSS - " + nickname);
 
         recyclerView = findViewById(R.id.recyclerView);
         searchView = findViewById(R.id.searchView);
@@ -158,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!showingFavorites) loadSneakers();
 
         SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
         String screenColor = prefs.getString("screen_color", "white");
@@ -171,6 +175,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.mainLayout).setBackgroundColor(bgColor);
+        setTitle(nickname.isEmpty() ? "SneakSS" : "SneakSS - " + nickname);
+
+        if (!showingFavorites) loadSneakers();
     }
 
     private void loadSneakers() {

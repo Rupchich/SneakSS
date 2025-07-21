@@ -63,6 +63,12 @@
             android:label="Info aplikacije"
             android:theme="@style/Theme.SneakSS" />
 
+        <activity android:name=".RegisterActivity"
+            android:exported="false"
+            android:label="Info aplikacije"
+            android:theme="@style/Theme.SneakSS" />
+
+
 
     </application>
 

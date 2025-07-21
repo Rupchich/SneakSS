@@ -13,7 +13,9 @@ public class SneakerRepository {
     private final ExecutorService executorService;
 
     public SneakerRepository(Context context) {
-        AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "sneaker-db").build();
+        AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "sneaker-db")
+                .fallbackToDestructiveMigration()
+                .build();
         sneakerDao = db.sneakerDao();
         executorService = Executors.newSingleThreadExecutor();
     }
@@ -38,20 +40,18 @@ public class SneakerRepository {
     }
 
     public void getFavorites(Callback<List<Sneaker>> callback) {
-        Executors.newSingleThreadExecutor().execute(() -> {
+        executorService.execute(() -> {
             List<Sneaker> favorites = sneakerDao.getFavorites();
             callback.onResult(favorites);
         });
     }
 
     public void getById(int id, Callback<Sneaker> callback) {
-        Executors.newSingleThreadExecutor().execute(() -> {
+        executorService.execute(() -> {
             Sneaker s = sneakerDao.getById(id);
             callback.onResult(s);
         });
     }
-
-
 
     public interface SneakerCallback {
         void onSneakersLoaded(List<Sneaker> sneakers);
