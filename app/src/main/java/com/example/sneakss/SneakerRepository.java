@@ -37,6 +37,14 @@ public class SneakerRepository {
         });
     }
 
+    public void getFavorites(Callback<List<Sneaker>> callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Sneaker> favorites = sneakerDao.getFavorites();
+            callback.onResult(favorites);
+        });
+    }
+
+
     public interface SneakerCallback {
         void onSneakersLoaded(List<Sneaker> sneakers);
     }

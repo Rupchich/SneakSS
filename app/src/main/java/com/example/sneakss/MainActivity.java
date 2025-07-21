@@ -3,12 +3,10 @@ package com.example.sneakss;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private SneakerRepository repository;
     private List<Sneaker> sneakerList = new ArrayList<>();
     private List<Sneaker> fullList = new ArrayList<>();
+    private boolean showingFavorites = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,14 +95,31 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetDialog.dismiss();
         });
 
+        TextView favoritesView = sheetView.findViewById(R.id.navFavorites);
+        favoritesView.setText(showingFavorites ? "Prikaži sve" : "Prikaži favorite");
+
+        favoritesView.setOnClickListener(view -> {
+            if (showingFavorites) {
+                showingFavorites = false;
+                loadSneakers();
+            } else {
+                showingFavorites = true;
+                repository.getFavorites(favorites -> runOnUiThread(() -> {
+                    sneakerList.clear();
+                    sneakerList.addAll(favorites);
+                    adapter.notifyDataSetChanged();
+                }));
+            }
+            bottomSheetDialog.dismiss();
+        });
+
         bottomSheetDialog.show();
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadSneakers();
+        if (!showingFavorites) loadSneakers();
 
         SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
         String screenColor = prefs.getString("screen_color", "white");
@@ -119,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadSneakers() {
+        showingFavorites = false;
         repository.getAll(sneakers -> runOnUiThread(() -> {
             fullList.clear();
             fullList.addAll(sneakers);

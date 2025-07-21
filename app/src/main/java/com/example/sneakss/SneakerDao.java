@@ -22,4 +22,7 @@ public interface SneakerDao {
 
     @Query("SELECT * FROM Sneaker")
     List<Sneaker> getAll();
+
+    @Query("SELECT * FROM Sneaker WHERE isFavorite = 1")
+    List<Sneaker> getFavorites();
 }

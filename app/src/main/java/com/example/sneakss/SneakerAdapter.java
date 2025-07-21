@@ -50,6 +50,8 @@ public class SneakerAdapter extends RecyclerView.Adapter<SneakerAdapter.SneakerV
 
         holder.itemView.setBackgroundColor(bgColor);
 
+        holder.favoriteIcon.setVisibility(sneaker.isFavorite ? View.VISIBLE : View.GONE);
+
         holder.options.setOnClickListener(v -> showPopupMenu(v, holder.getAdapterPosition(), sneaker, holder.itemView.getContext()));
 
         holder.itemView.setOnClickListener(v -> {
@@ -73,13 +75,14 @@ public class SneakerAdapter extends RecyclerView.Adapter<SneakerAdapter.SneakerV
     }
 
     public static class SneakerViewHolder extends RecyclerView.ViewHolder {
-        ImageView image, options;
+        ImageView image, options, favoriteIcon;
         TextView name, brand, color, size, purpose, price;
 
         public SneakerViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.sneakerImage);
             options = itemView.findViewById(R.id.optionsMenu);
+            favoriteIcon = itemView.findViewById(R.id.favoriteIcon);
             name = itemView.findViewById(R.id.sneakerName);
             brand = itemView.findViewById(R.id.sneakerBrand);
             color = itemView.findViewById(R.id.sneakerColor);
@@ -93,7 +96,11 @@ public class SneakerAdapter extends RecyclerView.Adapter<SneakerAdapter.SneakerV
         PopupMenu popup = new PopupMenu(context, view);
         popup.inflate(R.menu.sneaker_menu);
 
+        popup.getMenu().add(sneaker.isFavorite ? "Makni iz favorita" : "Dodaj u favorite");
+
         popup.setOnMenuItemClickListener(item -> {
+            String title = item.getTitle().toString();
+
             if (item.getItemId() == R.id.menu_delete) {
                 confirmDelete(context, sneaker);
                 return true;
@@ -109,7 +116,14 @@ public class SneakerAdapter extends RecyclerView.Adapter<SneakerAdapter.SneakerV
                 intent.putExtra("imageResId", sneaker.imageResId);
                 context.startActivity(intent);
                 return true;
+            } else if (title.equals("Dodaj u favorite") || title.equals("Makni iz favorita")) {
+                sneaker.isFavorite = !sneaker.isFavorite;
+                SneakerRepository repository = new SneakerRepository(context);
+                repository.update(sneaker);
+                notifyItemChanged(position);
+                return true;
             }
+
             return false;
         });
 

@@ -33,4 +33,7 @@ public class Sneaker {
 
     @ColumnInfo(name = "note")
     public String note;
+
+    @ColumnInfo(name = "isFavorite")
+    public boolean isFavorite;
 }
