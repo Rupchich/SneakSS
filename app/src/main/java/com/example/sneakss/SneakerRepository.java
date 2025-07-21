@@ -44,6 +44,14 @@ public class SneakerRepository {
         });
     }
 
+    public void getById(int id, Callback<Sneaker> callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            Sneaker s = sneakerDao.getById(id);
+            callback.onResult(s);
+        });
+    }
+
+
 
     public interface SneakerCallback {
         void onSneakersLoaded(List<Sneaker> sneakers);

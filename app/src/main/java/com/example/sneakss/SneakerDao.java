@@ -25,4 +25,8 @@ public interface SneakerDao {
 
     @Query("SELECT * FROM Sneaker WHERE isFavorite = 1")
     List<Sneaker> getFavorites();
+
+    @Query("SELECT * FROM Sneaker WHERE id = :id LIMIT 1")
+    Sneaker getById(int id);
+
 }

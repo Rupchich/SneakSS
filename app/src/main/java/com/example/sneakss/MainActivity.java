@@ -1,5 +1,6 @@
 package com.example.sneakss;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -113,7 +114,45 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetDialog.dismiss();
         });
 
+        sheetView.findViewById(R.id.navCompare).setOnClickListener(view -> {
+            bottomSheetDialog.dismiss();
+            showFirstSelectionDialog();
+        });
+
         bottomSheetDialog.show();
+    }
+
+    private void showFirstSelectionDialog() {
+        String[] items = new String[fullList.size()];
+        for (int i = 0; i < fullList.size(); i++) {
+            items[i] = fullList.get(i).name;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Odaberi prvu tenisicu");
+        builder.setItems(items, (dialog, which) -> {
+            Sneaker first = fullList.get(which);
+            showSecondSelectionDialog(first);
+        });
+        builder.show();
+    }
+
+    private void showSecondSelectionDialog(Sneaker firstSneaker) {
+        String[] items = new String[fullList.size()];
+        for (int i = 0; i < fullList.size(); i++) {
+            items[i] = fullList.get(i).name;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Odaberi drugu tenisicu");
+        builder.setItems(items, (dialog, which) -> {
+            Sneaker second = fullList.get(which);
+            Intent intent = new Intent(MainActivity.this, CompareActivity.class);
+            intent.putExtra("first_id", firstSneaker.id);
+            intent.putExtra("second_id", second.id);
+            startActivity(intent);
+        });
+        builder.show();
     }
 
     @Override
@@ -159,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
         List<Sneaker> filtered = new ArrayList<>();
         for (Sneaker s : fullList) {
             boolean match = true;
-
             if (!name.isEmpty() && !s.name.equalsIgnoreCase(name)) match = false;
             if (!brand.isEmpty() && !s.brand.equalsIgnoreCase(brand)) match = false;
             if (!color.isEmpty() && !s.color.equalsIgnoreCase(color)) match = false;
@@ -173,10 +211,8 @@ public class MainActivity extends AppCompatActivity {
                     match = false;
                 }
             }
-
             if (match) filtered.add(s);
         }
-
         sneakerList.clear();
         sneakerList.addAll(filtered);
         adapter.notifyDataSetChanged();

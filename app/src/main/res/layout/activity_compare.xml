@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1,2"
+            android:shrinkColumns="1,2">
+
+            <TableRow>
+                <TextView android:text="Atribut" android:textStyle="bold" />
+                <TextView android:text="Tenisica 1" android:textStyle="bold" />
+                <TextView android:text="Tenisica 2" android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Naziv" android:textStyle="bold" />
+                <TextView android:id="@+id/nameLeft" />
+                <TextView android:id="@+id/nameRight" />
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Brand" android:textStyle="bold" />
+                <TextView android:id="@+id/brandLeft" />
+                <TextView android:id="@+id/brandRight" />
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Boja" android:textStyle="bold" />
+                <TextView android:id="@+id/colorLeft" />
+                <TextView android:id="@+id/colorRight" />
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Veličina" android:textStyle="bold" />
+                <TextView android:id="@+id/sizeLeft" />
+                <TextView android:id="@+id/sizeRight" />
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Namjena" android:textStyle="bold" />
+                <TextView android:id="@+id/purposeLeft" />
+                <TextView android:id="@+id/purposeRight" />
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Cijena (€)" android:textStyle="bold" />
+                <TextView android:id="@+id/priceLeft" />
+                <TextView android:id="@+id/priceRight" />
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Bilješka" android:textStyle="bold" />
+                <TextView android:id="@+id/noteLeft" />
+                <TextView android:id="@+id/noteRight" />
+            </TableRow>
+        </TableLayout>
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kraj usporedbe"
+            android:layout_marginTop="24dp"/>
+    </LinearLayout>
+</ScrollView>
